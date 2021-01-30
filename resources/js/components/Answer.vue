@@ -22,7 +22,7 @@ export default {
     },
     update() {
       axios
-        .patch(`/questions/${this.questionId}/answers/${this.id}`, {
+        .patch(this.endPoint, {
           body: this.body,
         })
         .then(
@@ -36,10 +36,25 @@ export default {
           }
         );
     },
+    destroy() {
+      if (confirm("Are you sure?")) {
+        axios.delete(this.endPoint).then(
+          (res) => {
+            $(this.$el).fadeOut(500, () => {
+              alert(res.data.message);
+            });
+          },
+          (err) => {}
+        );
+      }
+    },
   },
   computed: {
     isInvalid() {
       return this.body.trim().length < 10;
+    },
+    endPoint() {
+      return `/questions/${this.questionId}/answers/${this.id}`;
     },
   },
 };

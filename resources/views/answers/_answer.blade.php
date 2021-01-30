@@ -21,14 +21,7 @@
                             <a @click.prevent="edit" class="btn btn-sm btn-outline-info">Edit</a>
                             @endcan
                             @can('delete', $answer)
-                            <form method="POST"
-                                action="{{ route('questions.answers.destroy', [$question->id, $answer->id]) }}"
-                                class="d-inline">
-                                @method('delete')
-                                @csrf
-                                <button type="submit" class="btn btn-outline-danger btn-sm"
-                                    onclick="return confirm('Are you sure?')">Delete</button>
-                            </form>
+                            <button @click="destroy" class="btn btn-outline-danger btn-sm">Delete</button>
                             @endcan
                         </div>
                     </div>

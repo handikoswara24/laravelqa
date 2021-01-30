@@ -3738,7 +3738,7 @@ __webpack_require__.r(__webpack_exports__);
     update: function update() {
       var _this = this;
 
-      axios.patch("/questions/".concat(this.questionId, "/answers/").concat(this.id), {
+      axios.patch(this.endPoint, {
         body: this.body
       }).then(function (res) {
         _this.bodyHtml = res.data.body_html;
@@ -3747,11 +3747,25 @@ __webpack_require__.r(__webpack_exports__);
       }, function (err) {
         alert(err.response.data.message);
       });
+    },
+    destroy: function destroy() {
+      var _this2 = this;
+
+      if (confirm("Are you sure?")) {
+        axios["delete"](this.endPoint).then(function (res) {
+          $(_this2.$el).fadeOut(500, function () {
+            alert(res.data.message);
+          });
+        }, function (err) {});
+      }
     }
   },
   computed: {
     isInvalid: function isInvalid() {
       return this.body.trim().length < 10;
+    },
+    endPoint: function endPoint() {
+      return "/questions/".concat(this.questionId, "/answers/").concat(this.id);
     }
   }
 });
