@@ -106,11 +106,12 @@ export default {
             (instance, toast) => {
               axios.delete(this.endPoint).then(
                 (res) => {
-                  $(this.$el).fadeOut(500, () => {
-                    this.$toast.success(res.data.message, "Success", {
-                      timeout: 3000,
-                    });
-                  });
+                  this.$emit("deleted");
+                  // $(this.$el).fadeOut(500, () => {
+                  //   this.$toast.success(res.data.message, "Success", {
+                  //     timeout: 3000,
+                  //   });
+                  // });
                 },
                 (err) => {}
               );
