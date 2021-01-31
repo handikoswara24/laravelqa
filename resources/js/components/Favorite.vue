@@ -29,9 +29,6 @@ export default {
     endPoint() {
       return `/questions/${this.id}/favorites`;
     },
-    signIn() {
-      return window.Auth.signIn;
-    },
   },
   methods: {
     toggle() {
