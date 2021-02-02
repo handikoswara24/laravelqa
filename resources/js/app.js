@@ -12,6 +12,8 @@ import VueIziToast from 'vue-izitoast';
 
 import 'izitoast/dist/css/iziToast.min.css';
 import Authorization from './authorization/authorize';
+//enable this for math
+//import "markdown-it-vue/dist/markdown-it-vue.css";
 Vue.use(VueIziToast);
 Vue.use(Authorization);
 
@@ -26,7 +28,9 @@ Vue.use(Authorization);
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+
 Vue.component('question-page', require('./pages/QuestionPage.vue').default);
+Vue.component('markdown-it-vue', require("markdown-it-vue").default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -55,7 +55,8 @@
           <div class="media">
             <vote :model="question" name="question"></vote>
             <div class="media-body">
-              <div v-html="bodyHtml"></div>
+              <markdown-it-vue :content="body" />
+              <!-- <div v-html="bodyHtml"></div> -->
               <div class="row">
                 <div class="col-4">
                   <div class="ml-auto">

@@ -14,8 +14,11 @@
       <div class="tab-pane active" id="write">
         <slot></slot>
       </div>
-
-      <div id="preview">Preview...</div>
+      <div id="preview" class="tab-pane">
+        <div>
+          <markdown-it-vue :content="body" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -23,5 +26,10 @@
 <script>
 export default {
   props: ["body"],
+  computed: {
+    // preview() {
+    //   return md.render(this.body);
+    // },
+  },
 };
 </script>
