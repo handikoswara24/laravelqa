@@ -16,12 +16,14 @@
           <div class="media">
             <div class="media-body">
               <div class="form-group">
-                <textarea
-                  class="form-control"
-                  v-model="body"
-                  rows="10"
-                  required
-                ></textarea>
+                <m-editor :body="body">
+                  <textarea
+                    class="form-control"
+                    v-model="body"
+                    rows="10"
+                    required
+                  ></textarea>
+                </m-editor>
               </div>
               <button
                 type="submit"
@@ -89,10 +91,11 @@
 import Vote from "./Vote.vue";
 import UserInfo from "./UserInfo.vue";
 import modification from "../mixins/modifications.js";
+import MEditor from "./MEditor.vue";
 
 export default {
   props: ["question"],
-  components: { Vote, UserInfo },
+  components: { Vote, UserInfo, MEditor },
   mixins: [modification],
   data() {
     return {
