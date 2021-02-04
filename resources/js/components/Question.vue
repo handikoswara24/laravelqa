@@ -16,7 +16,7 @@
           <div class="media">
             <div class="media-body">
               <div class="form-group">
-                <m-editor :body="body">
+                <m-editor :body="body" :keyId="'q'">
                   <textarea
                     class="form-control"
                     v-model="body"
@@ -57,7 +57,7 @@
             <div class="media-body">
               <markdown-it-vue :content="body" />
               <!-- <div v-html="bodyHtml"></div> -->
-              <div class="row">
+              <div class="row mt-2">
                 <div class="col-4">
                   <div class="ml-auto">
                     <a

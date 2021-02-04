@@ -5,12 +5,14 @@
       <form v-if="editing" @submit.prevent="update">
         Edit Answer Form
         <div class="form-group">
-          <textarea
-            class="form-control"
-            v-model="body"
-            rows="10"
-            required
-          ></textarea>
+          <m-editor :body="body" :keyId="keyId">
+            <textarea
+              class="form-control"
+              v-model="body"
+              rows="10"
+              required
+            ></textarea>
+          </m-editor>
         </div>
         <button type="submit" class="btn btn-primary" :disabled="isInvalid">
           Update
@@ -20,8 +22,9 @@
         </button>
       </form>
       <div v-else>
-        <div v-html="bodyHtml"></div>
-        <div class="row">
+        <markdown-it-vue :content="body" />
+        <!-- <div v-html="bodyHtml"></div> -->
+        <div class="row mt-2">
           <div class="col-4">
             <div class="ml-auto">
               <a
@@ -53,10 +56,11 @@
 import Vote from "./Vote.vue";
 import UserInfo from "./UserInfo.vue";
 import modification from "../mixins/modifications";
+import MEditor from "./MEditor.vue";
 
 export default {
   props: ["answer"],
-  components: { Vote, UserInfo },
+  components: { Vote, UserInfo, MEditor },
   mixins: [modification],
   data() {
     return {
@@ -102,6 +106,9 @@ export default {
     },
     endpoint() {
       return `/questions/${this.questionId}/answers/${this.id}`;
+    },
+    keyId() {
+      return "a-" + this.id;
     },
   },
 };
