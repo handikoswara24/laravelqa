@@ -24,12 +24,20 @@
 </template>
 
 <script>
+import autosize from "autosize";
+
 export default {
   props: ["body"],
   computed: {
     // preview() {
     //   return md.render(this.body);
     // },
+  },
+  updated() {
+    autosize(this.$el.querySelector("textarea"));
+  },
+  mounted() {
+    autosize(this.$el.querySelector("textarea"));
   },
 };
 </script>
