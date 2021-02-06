@@ -42,10 +42,14 @@ class LoginController extends Controller
 
     public function getToken(Request $request)
     {
+        //Client Secret PC
+        $clientSecret = "w96Ge6Z88SeBKdu8dOuP73v3qT1iXEWuhQeyKxWl";
+        //Client Secret Laptop
+        //$clientSecret = "KuELHUiunuZixN7C4BpbZc9CHcxieExs84GfIw8z"
         $request->request->add([
             "grant_type" => "password",
             "client_id" => 2,
-            "client_secret" => "KuELHUiunuZixN7C4BpbZc9CHcxieExs84GfIw8z",
+            "client_secret" => $clientSecret,
             "username" => $request->username,
             "password" => $request->password
         ]);
