@@ -15,10 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/token', [LoginController::class, 'getToken']);
+//Route::post('/token', [LoginController::class, 'getToken']);
 Route::get('/questions', "App\Http\Controllers\Api\QuestionsController@index");
 Route::get('/questions/{question}/answers', "App\Http\Controllers\Api\AnswersController@index");
 Route::get("/questions/{question}-{slug}", "App\Http\Controllers\Api\QuestionDetailsController");
+Route::post("/login", "App\Http\Controllers\Api\Auth\LoginController@store");
+Route::post("/register", "App\Http\Controllers\Api\Auth\RegisterController");
+Route::delete("/logout", "App\Http\Controllers\Api\Auth\LoginController@destroy")->middleware("auth:api");
 Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('/questions', 'App\Http\Controllers\Api\QuestionsController')->except('index');
     Route::apiResource('/questions.answers', 'App\Http\Controllers\Api\AnswersController')->except('index');
