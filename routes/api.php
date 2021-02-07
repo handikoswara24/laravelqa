@@ -22,6 +22,8 @@ Route::get("/questions/{question}-{slug}", "App\Http\Controllers\Api\QuestionDet
 Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('/questions', 'App\Http\Controllers\Api\QuestionsController')->except('index');
     Route::apiResource('/questions.answers', 'App\Http\Controllers\Api\AnswersController')->except('index');
+    Route::post("/questions/{question}/vote", "App\Http\Controllers\Api\VoteQuestionController");
+    Route::post("/answers/{answer}/vote", "App\Http\Controllers\Api\VoteAnswerController");
 });
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
