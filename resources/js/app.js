@@ -12,6 +12,7 @@ import VueIziToast from 'vue-izitoast';
 
 import 'izitoast/dist/css/iziToast.min.css';
 import Authorization from './authorization/authorize';
+import router from "./router";
 //enable this for math
 //import "markdown-it-vue/dist/markdown-it-vue.css";
 Vue.use(VueIziToast);
@@ -40,4 +41,5 @@ Vue.component('markdown-it-vue', require("markdown-it-vue").default);
 
 const app = new Vue({
     el: '#app',
+    router
 });
