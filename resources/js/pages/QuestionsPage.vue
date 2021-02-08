@@ -1,7 +1,58 @@
 <template>
-  <h1>Questions Page</h1>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <h2>All Questions</h2>
+              <div class="ml-auto">
+                <a href="#" class="btn btn-outline-secondary">Ask Question</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div v-if="questions.length">
+              <question-excerpt
+                v-for="question in questions"
+                :question="question"
+                :key="question.id"
+              ></question-excerpt>
+            </div>
+            <div class="alert alert-warning" v-else>
+              <strong>Sorry</strong> There are no questions available.
+            </div>
+
+            <!-- <div class="d-flex justify-content-center mt-3">
+                        {{ $questions->links() }}
+                    </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-export default {};
+import QuestionExcerpt from "../components/QuestionExcerpt.vue";
+
+export default {
+  components: { QuestionExcerpt },
+  data() {
+    return {
+      questions: [],
+    };
+  },
+  methods: {
+    fetchQuestions() {
+      axios.get("/questions").then(({ data }) => {
+        this.questions = data.data;
+      });
+    },
+  },
+  mounted() {
+    this.fetchQuestions();
+  },
+};
 </script>
