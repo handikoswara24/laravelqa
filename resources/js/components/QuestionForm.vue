@@ -52,11 +52,17 @@ export default {
     };
   },
   mounted() {
-    EventBus.$on("error", (error) => (this.error = error));
+    EventBus.$on("error", (error) => {
+      this.error.body = error.body ? error.body : [];
+      this.error.title = error.title ? error.title : [];
+    });
+    if (this.isEdit) {
+      this.fetchQuestion();
+    }
   },
   computed: {
     buttonText() {
-      return "Ask Question";
+      return this.isEdit ? "Update Question" : "Ask Question";
     },
   },
   methods: {
@@ -71,6 +77,23 @@ export default {
         "form-control",
         this.error[column] && this.error[column][0] ? "is-invalid" : "",
       ];
+    },
+    fetchQuestion() {
+      axios
+        .get(`/questions/${this.$route.params.id}`)
+        .then(({ data }) => {
+          this.title = data.title;
+          this.body = data.body;
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
+    },
+  },
+  props: {
+    isEdit: {
+      type: Boolean,
+      default: false,
     },
   },
 };
