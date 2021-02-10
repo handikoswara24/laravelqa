@@ -11,23 +11,7 @@
               </div>
             </div>
           </div>
-
-          <div class="card-body">
-            <div v-if="questions.length">
-              <question-excerpt
-                v-for="question in questions"
-                :question="question"
-                :key="question.id"
-              ></question-excerpt>
-            </div>
-            <div class="alert alert-warning" v-else>
-              <strong>Sorry</strong> There are no questions available.
-            </div>
-
-            <!-- <div class="d-flex justify-content-center mt-3">
-                        {{ $questions->links() }}
-                    </div> -->
-          </div>
+          <questions></questions>
         </div>
       </div>
     </div>
@@ -35,24 +19,9 @@
 </template>
 
 <script>
-import QuestionExcerpt from "../components/QuestionExcerpt.vue";
+import Questions from "../components/Questions.vue";
 
 export default {
-  components: { QuestionExcerpt },
-  data() {
-    return {
-      questions: [],
-    };
-  },
-  methods: {
-    fetchQuestions() {
-      axios.get("/questions").then(({ data }) => {
-        this.questions = data.data;
-      });
-    },
-  },
-  mounted() {
-    this.fetchQuestions();
-  },
+  components: { Questions },
 };
 </script>
