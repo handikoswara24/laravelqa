@@ -16,7 +16,7 @@
             ></answer>
             <div class="text-center mt-3" v-if="nextUrl">
               <button
-                @click.prevent="fetch(nextUrl)"
+                @click.prevent="fetch(theNextUrl)"
                 class="btn btn-outline-secondary"
               >
                 Load more answers
@@ -33,6 +33,7 @@
 <script>
 import Answer from "./Answer.vue";
 import NewAnswer from "./NewAnswer.vue";
+import EventBus from "../event-bus.js";
 export default {
   props: ["question"],
   data() {
@@ -41,22 +42,30 @@ export default {
       count: this.question.answers_count,
       answers: [],
       nextUrl: null,
+      excludeAnswers: [],
     };
   },
   methods: {
     add(answer) {
+      this.excludeAnswers.push(answer);
       this.answers.push(answer);
       this.count++;
+      if (this.count == 1) {
+        EventBus.$emit("answers-count-changed", this.count);
+      }
     },
     remove(index) {
       this.answers.splice(index, 1);
       this.count--;
+      if (this.count == 0) {
+        EventBus.$emit("answers-count-changed", this.count);
+      }
     },
     fetch(endpoint) {
       axios.get(endpoint).then(
         ({ data }) => {
           this.answers.push(...data.data);
-          this.nextUrl = data.next_page_url;
+          this.nextUrl = data.links.next;
         },
         (err) => {}
       );
@@ -68,6 +77,15 @@ export default {
   computed: {
     title() {
       return this.count + " " + (this.count > 1 ? "Answers" : "Answer");
+    },
+    theNextUrl() {
+      if (this.nextUrl && this.excludeAnswers.length) {
+        return (
+          this.nextUrl +
+          this.excludeAnswers.map((a) => "&excludes[]=" + a.id).join("")
+        );
+      }
+      return this.nextUrl;
     },
   },
   components: {

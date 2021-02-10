@@ -93,6 +93,7 @@ import Vote from "./Vote.vue";
 import UserInfo from "./UserInfo.vue";
 import modification from "../mixins/modifications.js";
 import MEditor from "./MEditor.vue";
+import EventBus from "../event-bus.js";
 
 export default {
   props: ["question"],
@@ -114,6 +115,11 @@ export default {
     endpoint() {
       return `/questions/${this.id}`;
     },
+  },
+  mounted() {
+    EventBus.$on("answers-count-changed", (count) => {
+      this.question.answers_count = count;
+    });
   },
   methods: {
     setEditCache() {
@@ -140,7 +146,7 @@ export default {
             timeout: 2000,
           });
           setTimeout(() => {
-            window.location.href = "/questions";
+            this.$router.push({ name: "questions" });
           }, 3000);
         },
         (err) => {
