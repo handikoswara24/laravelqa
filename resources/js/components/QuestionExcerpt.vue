@@ -26,20 +26,13 @@
             >Edit</router-link
           >
 
-          <form
+          <button
             v-if="authorize('deleteQuestion', question)"
-            method="POST"
-            action="#"
-            class="d-inline"
+            class="btn btn-sm btn-outline-danger"
+            @click="destroy"
           >
-            <button
-              type="submit"
-              class="btn btn-outline-danger btn-sm"
-              onclick="return confirm('Are you sure?')"
-            >
-              Delete
-            </button>
-          </form>
+            Delete
+          </button>
         </div>
       </div>
       <p class="lead">
@@ -55,10 +48,18 @@
 </template>
 
 <script>
+import destroy from "../mixins/destroy.js";
 export default {
+  mixins: [destroy],
   methods: {
     str_plural(str, count) {
       return str + (count > 1 ? "s" : "");
+    },
+    delete() {
+      axios.delete("/questions/" + this.question.id).then(({ data }) => {
+        this.$toast.success(data.message, "Success", { timeout: 2000 });
+        this.$emit("deleted");
+      });
     },
   },
   props: ["question"],
