@@ -32,6 +32,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
         Passport::routes();
+        Passport::loadKeysFrom(__DIR__ . '/../secrets/oauth');
 
         // \Gate::define('update-question', function ($user, $question) {
         //     return $user->id == $question->user_id;
