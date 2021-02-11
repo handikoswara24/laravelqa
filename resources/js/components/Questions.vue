@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="card-body">
-      <div v-if="questions.length">
+      <spinner v-if="$root.loading"></spinner>
+      <div v-else-if="questions.length">
         <question-excerpt
           @deleted="remove(index)"
           v-for="(question, index) in questions"
@@ -37,13 +38,14 @@ export default {
   },
   methods: {
     fetchQuestions() {
-      axios
-        .get("/questions", { params: this.$route.query })
-        .then(({ data }) => {
+      axios.get("/questions", { params: this.$route.query }).then(
+        ({ data }) => {
           this.questions = data.data;
           this.meta = data.meta;
           this.links = data.links;
-        });
+        },
+        (err) => {}
+      );
     },
     remove(index) {
       this.questions.splice(index, 1);

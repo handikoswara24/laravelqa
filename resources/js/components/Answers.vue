@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="row mt-4" v-cloak v-if="count">
+    <spinner v-if="loading"></spinner>
+    <div class="row mt-4" v-cloak v-else-if="count">
       <div class="col-md-12">
         <div class="card">
           <div class="card-body">
@@ -34,6 +35,7 @@
 import Answer from "./Answer.vue";
 import NewAnswer from "./NewAnswer.vue";
 import EventBus from "../event-bus.js";
+import Spinner from "./Spinner.vue";
 export default {
   props: ["question"],
   data() {
@@ -43,6 +45,7 @@ export default {
       answers: [],
       nextUrl: null,
       excludeAnswers: [],
+      loading: false,
     };
   },
   methods: {
@@ -62,12 +65,16 @@ export default {
       }
     },
     fetch(endpoint) {
+      this.loading = true;
       axios.get(endpoint).then(
         ({ data }) => {
           this.answers.push(...data.data);
           this.nextUrl = data.links.next;
+          this.loading = false;
         },
-        (err) => {}
+        (err) => {
+          this.loading = false;
+        }
       );
     },
   },
@@ -91,6 +98,7 @@ export default {
   components: {
     Answer,
     NewAnswer,
+    Spinner,
   },
 };
 </script>

@@ -32,6 +32,7 @@ Vue.use(Authorization);
 
 Vue.component('question-page', require('./pages/QuestionPage.vue').default);
 Vue.component('markdown-it-vue', require("markdown-it-vue").default);
+Vue.component('spinner', require('./components/Spinner.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -41,5 +42,32 @@ Vue.component('markdown-it-vue', require("markdown-it-vue").default);
 
 const app = new Vue({
     el: '#app',
-    router
+    router,
+    data: {
+        loading: false
+    },
+    created() {
+        axios.interceptors.request.use((config) => {
+            // Do something before request is sent
+            this.loading = true;
+            return config;
+        }, (error) => {
+            // Do something with request error
+            this.loading = false;
+            return Promise.reject(error);
+        });
+
+        // Add a response interceptor
+        axios.interceptors.response.use((response) => {
+            // Any status code that lie within the range of 2xx cause this function to trigger
+            // Do something with response data
+            this.loading = false;
+            return response;
+        }, (error) => {
+            // Any status codes that falls outside the range of 2xx cause this function to trigger
+            // Do something with response error
+            this.loading = false;
+            return Promise.reject(error);
+        });
+    }
 });
