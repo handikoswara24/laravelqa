@@ -45,7 +45,9 @@ class LoginController extends Controller
         //Client Secret PC
         //$clientSecret = "w96Ge6Z88SeBKdu8dOuP73v3qT1iXEWuhQeyKxWl";
         //Client Secret Laptop
-        $clientSecret = "KuELHUiunuZixN7C4BpbZc9CHcxieExs84GfIw8z";
+        //$clientSecret = "KuELHUiunuZixN7C4BpbZc9CHcxieExs84GfIw8z";
+        //ClientSecret Prod
+        $clientSecret = "r5AIHaFQXA8v6VwRhzRlvHgSJ3kazR8AVGq0nMVS";
         $request->request->add([
             "grant_type" => "password",
             "client_id" => 2,
