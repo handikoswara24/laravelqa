@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::post('/token', [LoginController::class, 'getToken']);
+Route::post('/token', [LoginController::class, 'getToken']);
 Route::get('/questions', "App\Http\Controllers\Api\QuestionsController@index");
 Route::get('/questions/{question}/answers', "App\Http\Controllers\Api\AnswersController@index");
 Route::get("/questions/{question}-{slug}", "App\Http\Controllers\Api\QuestionDetailsController");
